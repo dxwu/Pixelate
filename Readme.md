@@ -21,7 +21,7 @@ Blends image pixels in custom dimensions.
 
 ## Setup
 
-Install dotnet core
+Install dotnet core 3.1
 
 ```
 dotnet build

@@ -5,13 +5,21 @@ namespace pixelate
 {
     public class Program
     {
-        /// Usage: dotnet run [image path] [box width size] [box height size]
-        /// usings, error handling
         public static void Main(string[] args)
         {
-            Bitmap img = new Bitmap(args[0]);
-            int boxSizeW = int.Parse(args[1]);
-            int boxSizeH = int.Parse(args[2]);
+            Bitmap img;
+            int boxSizeW;
+            int boxSizeH;
+
+            try {
+                img = new Bitmap(args[0]);
+                boxSizeW = int.Parse(args[1]);
+                boxSizeH = int.Parse(args[2]);
+            } catch (Exception e) {
+                Console.WriteLine("Invalid arguments. Usage: dotnet run [image path] [box width size] [box height size].\n" + e);
+                return;
+            }
+
             int numRows = img.Height / boxSizeH + 1;
             int numCols = img.Width / boxSizeW + 1;
 
@@ -24,8 +32,8 @@ namespace pixelate
                 }
             }
 
-            Image newImage = new Bitmap(img.Width, img.Height);
-            Graphics drawing = Graphics.FromImage(newImage);
+            using Image newImage = new Bitmap(img.Width, img.Height);
+            using Graphics drawing = Graphics.FromImage(newImage);
 
             for (int row=0; row<numRows; row++) {
                 for (int col=0; col<numCols; col++) {
